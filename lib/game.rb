@@ -10,6 +10,3 @@ class Game < Gosu::Window
     close if id == Gosu::KbEscape
   end
 end
-
-window = Game.new(800, 700, false)
-window.show
