@@ -16,26 +16,31 @@ class Game < Gosu::Window
   end
 
   def update
-    @x -= @speed if button_down?(Gosu::KbLeft)
-    @x += @speed if button_down?(Gosu::KbRight)
-    @y -= @speed if button_down?(Gosu::KbUp)
-    @y += @speed if button_down?(Gosu::KbDown)
+    @speed = 3
 
-    # if button_down?(Gosu::KbLeft)
-    #   @player.move(:left) unless @player.x <= 0
-    # end
-    #
-    # if button_down?(Gosu::KbRight)
-    #   @player.move(:right) unless @player.x >= (self.width - @player.sprite.width - @player.speed)
-    # end
-    #
-    # if button_down?(Gosu::KbUp)
-    #   @player.move(:up) unless @player.y <= 0
-    # end
-    #
-    # if button_down?(Gosu::KbDown)
-    #   @player.move(:down) unless @player.y >= (self.height - @player.sprite.height - @player.speed)
-    # end
+    if button_down?(Gosu::KbLeftShift)
+      @speed = 9
+    end
+
+    if button_down?(Gosu::KbLeft)
+      @player.turn(:left)
+      @x -= @speed unless @x <= 0
+    end
+
+    if button_down?(Gosu::KbRight)
+      @player.turn(:right)
+      @x += @speed unless @x >= (@map.width - self.width)
+    end
+
+    if button_down?(Gosu::KbUp)
+      @player.turn(:up)
+      @y -= @speed unless @y <= 0
+    end
+
+    if button_down?(Gosu::KbDown)
+      @player.turn(:down)
+      @y += @speed unless @y >= (@map.height - self.height)
+    end
   end
 
   def draw
