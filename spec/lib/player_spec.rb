@@ -17,4 +17,23 @@ describe Player do
     player_with_custom_speed = Player.new(10)
     expect(player_with_custom_speed.speed).to eql(10)
   end
+
+  context "player movement" do
+    it "moves left" do
+      expect{player.move(:left)}.to change{player.x}.by(player.speed * -1)
+    end
+
+    it "moves right" do
+      expect{player.move(:right)}.to change{player.x}.by(player.speed)
+    end
+
+    it "moves up" do
+      expect{player.move(:up)}.to change{player.y}.by(player.speed * -1)
+    end
+
+    it "moves down" do
+      expect{player.move(:down)}.to change{player.y}.by(player.speed)
+    end
+  end
+
 end
