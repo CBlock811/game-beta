@@ -28,6 +28,3 @@ DEPENDENCIES
   gosu
   gosu_tiled
   rspec
-
-BUNDLED WITH
-   1.11.2

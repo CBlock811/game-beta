@@ -12,14 +12,14 @@ class Player
   end
 
   def move(direction)
-    @x -= speed if direction == :left
-    @x += speed if direction == :right
-    @y -= speed if direction == :up
-    @y += speed if direction == :down
+    # @x -= speed if direction == :left
+    # @x += speed if direction == :right
+    # @y -= speed if direction == :up
+    # @y += speed if direction == :down
   end
 
   def draw
-    @sprite.draw(@x, @y, 0)
+    @sprite.draw_rot(320/2, 600/2, 0, 0)
   end
 
 end
