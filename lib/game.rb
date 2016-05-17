@@ -17,7 +17,7 @@ class Game < Gosu::Window
 
       @player.take_damage if id == Gosu::KbT
       @player.heal_damage if id == Gosu::KbY
-    
+
   end
 
   def update
@@ -44,8 +44,7 @@ class Game < Gosu::Window
     @map.draw(0, 0)
     @player.draw
 
-    health_text = Gosu::Image.from_text("Health: #{@player.health}", 32)
-    health_text.draw(0, 0, 0, 1, 1, Gosu::Color::BLACK)
+    @player.draw_health
 
     if !@player.alive?
       game_over_text = Gosu::Image.from_text("YOU DEDED!", 64, {align: :center})

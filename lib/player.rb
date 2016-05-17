@@ -7,6 +7,7 @@ class Player
 
   def initialize(speed = 4)
     @sprite = Gosu::Image.new("graphics/smiley.gif")
+    @health_sprite = Gosu::Image.load_tiles("graphics/health.gif", 32, 32, {tileable: true})
     @speed = speed
     @max_health = @health = 6
     @damage = 1
@@ -31,6 +32,19 @@ class Player
 
   def alive?
     @health > 0
+  end
+
+  def draw_health
+    pip = 1
+    while pip <= @max_health do
+      if pip <= @health
+        @health_sprite[1].draw(32 * (pip - 1), 0, 0)
+      else
+        @health_sprite[0].draw(32 * (pip - 1), 0, 0)
+      end
+
+      pip += 1
+    end
   end
 
   def draw
