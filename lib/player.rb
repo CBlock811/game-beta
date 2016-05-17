@@ -1,14 +1,13 @@
 class Player
 
-  attr_accessor :speed
-  attr_accessor :x
-  attr_accessor :y
-  attr_accessor :sprite
+  attr_accessor :speed, :x, :y, :sprite
 
-  def initialize(speed = 3)
+  PIT_OFFSET = 96
+
+  def initialize(speed = 4)
     @sprite = Gosu::Image.new("graphics/smiley.gif")
     @speed = speed
-    @x = @y = 0
+    @x = @y = PIT_OFFSET
   end
 
   def move(direction)

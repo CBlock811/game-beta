@@ -3,9 +3,12 @@ require 'gosu_tiled'
 require_relative './player'
 
 class Game < Gosu::Window
+
+  PIT_OFFSET = 96
+
   def initialize(*args)
     super
-    @map = Gosu::Tiled.load_json(self, 'maps/terrain1.json')
+    @map = Gosu::Tiled.load_json(self, 'maps/pit.json')
     @player = Player.new
   end
 
@@ -15,19 +18,19 @@ class Game < Gosu::Window
 
   def update
     if button_down?(Gosu::KbLeft)
-      @player.move(:left) unless @player.x <= 0
+      @player.move(:left) unless @player.x <= PIT_OFFSET
     end
 
     if button_down?(Gosu::KbRight)
-      @player.move(:right) unless @player.x >= (self.width - @player.sprite.width - @player.speed)
+      @player.move(:right) unless @player.x >= (self.width - @player.sprite.width - (@player.speed + PIT_OFFSET))
     end
 
     if button_down?(Gosu::KbUp)
-      @player.move(:up) unless @player.y <= 0
+      @player.move(:up) unless @player.y <= PIT_OFFSET
     end
 
     if button_down?(Gosu::KbDown)
-      @player.move(:down) unless @player.y >= (self.height - @player.sprite.height - @player.speed)
+      @player.move(:down) unless @player.y >= (self.height - @player.sprite.height - (@player.speed + PIT_OFFSET))
     end
   end
 
