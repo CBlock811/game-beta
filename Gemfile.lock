@@ -1,6 +1,11 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    byebug (2.7.0)
+      columnize (~> 0.3)
+      debugger-linecache (~> 1.2)
+    columnize (0.3.6)
+    debugger-linecache (1.2.0)
     diff-lcs (1.2.5)
     gosu (0.10.6)
     gosu_tiled (0.1.1)
@@ -25,9 +30,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  byebug
   gosu
   gosu_tiled
   rspec
-
-BUNDLED WITH
-   1.11.2
