@@ -1,50 +1,45 @@
-require 'gosu'
-require 'gosu_tiled'
-require_relative './player'
-
 class Game < Gosu::Window
+
+  attr_accessor :map, :player
+
   def initialize(*args)
     super
-    @map = Gosu::Tiled.load_json(self, 'maps/terrain1.json')
-    @x = @y = 0
-    @speed = 3
-    @player = Player.new
-  end
 
-  def button_down(id)
-    close if id == Gosu::KbEscape
+    @map = Map.new(self)
+    @player = Player.new(self)
   end
 
   def update
-    @speed = 3
+    self.close if button_down?(Gosu::KbEscape)
 
-    if button_down?(Gosu::KbLeftShift)
-      @speed = 9
-    end
+    @map.set_speed(:walk)
+    @map.set_speed(:sprint) if button_down?(Gosu::KbLeftShift)
 
     if button_down?(Gosu::KbLeft)
+      @map.move(:left)
       @player.turn(:left)
-      @x -= @speed unless @x <= 0
+      @player.move(:left)
     end
 
     if button_down?(Gosu::KbRight)
+      @map.move(:right)
       @player.turn(:right)
-      @x += @speed unless @x >= (@map.width - self.width)
     end
 
     if button_down?(Gosu::KbUp)
+      @map.move(:up)
       @player.turn(:up)
-      @y -= @speed unless @y <= 0
     end
 
     if button_down?(Gosu::KbDown)
+      @map.move(:down)
       @player.turn(:down)
-      @y += @speed unless @y >= (@map.height - self.height)
     end
   end
 
   def draw
-    @map.draw(@x, @y)
+    Gosu::draw_rect(0, 0, self.width, self.height, Gosu::Color::GRAY)
+    @map.draw
     @player.draw
   end
 end
