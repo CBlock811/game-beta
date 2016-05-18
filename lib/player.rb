@@ -1,3 +1,5 @@
+require_relative './combatant'
+
 class Player < Combatant
 
   def initialize(*args)

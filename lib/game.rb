@@ -1,6 +1,5 @@
 require 'gosu'
 require 'gosu_tiled'
-require_relative './combatant'
 require_relative './player'
 
 class Game < Gosu::Window

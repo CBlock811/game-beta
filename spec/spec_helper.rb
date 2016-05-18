@@ -94,3 +94,10 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 end
+
+
+require 'gosu'
+require 'gosu_tiled'
+require_relative '../lib/game'
+require_relative '../lib/combatant'
+require_relative '../lib/player'
