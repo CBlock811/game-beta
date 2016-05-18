@@ -1,5 +1,6 @@
 require 'gosu'
 require 'gosu_tiled'
+require_relative './combatant'
 require_relative './player'
 
 class Game < Gosu::Window
@@ -9,7 +10,7 @@ class Game < Gosu::Window
   def initialize(*args)
     super
     @map = Gosu::Tiled.load_json(self, 'maps/pit.json')
-    @player = Player.new
+    @player = Player.new('default_player', 6)
   end
 
   def button_down(id)
