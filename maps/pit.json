@@ -19,7 +19,7 @@
         {
          "columns":6,
          "firstgid":1,
-         "image":"..\/..\/terrain\/graphics\/terrain.gif",
+         "image":"..\/graphics\/terrain.gif",
          "imageheight":32,
          "imagewidth":192,
          "margin":0,

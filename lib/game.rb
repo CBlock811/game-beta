@@ -1,6 +1,7 @@
 require 'gosu'
 require 'gosu_tiled'
 require_relative './player'
+require_relative './enemy'
 
 class Game < Gosu::Window
 
@@ -10,17 +11,27 @@ class Game < Gosu::Window
     super
     @map = Gosu::Tiled.load_json(self, 'maps/pit.json')
     @player = Player.new('default_player', 6)
+    @enemies = []
   end
 
   def button_down(id)
     close if id == Gosu::KbEscape
 
-      @player.take_damage if id == Gosu::KbT
-      @player.heal_damage if id == Gosu::KbY
+    @player.take_damage if id == Gosu::KbT
+    @player.heal_damage if id == Gosu::KbY
 
+    if id == Gosu::KbSpace
+      @enemies << Enemy.new('dead', 2, 1)
+    end
   end
 
   def update
+
+    @enemies.each do |enemy|
+      enemy.x += Random.rand(1..4)
+      enemy.y += Random.rand(1..4)
+    end
+
     if @player.alive?
       if button_down?(Gosu::KbLeft)
         @player.move(:left) unless @player.x <= PIT_OFFSET
@@ -43,6 +54,10 @@ class Game < Gosu::Window
   def draw
     @map.draw(0, 0)
     @player.draw
+
+    @enemies.each do |enemy|
+      enemy.draw
+    end
 
     @player.draw_health
 
