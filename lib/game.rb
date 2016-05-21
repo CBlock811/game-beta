@@ -21,7 +21,7 @@ class Game < Gosu::Window
     @player.heal_damage if id == Gosu::KbY
 
     if id == Gosu::KbSpace
-      @enemies << Enemy.new('dead', 2, 1)
+      @enemies << Enemy.new('dead', 2, 1, 3)
     end
   end
 
