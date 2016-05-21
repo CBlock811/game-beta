@@ -28,8 +28,17 @@ class Game < Gosu::Window
   def update
 
     @enemies.each do |enemy|
-      enemy.x += Random.rand(1..4)
-      enemy.y += Random.rand(1..4)
+      if @player.x < enemy.x
+        enemy.move(:left) unless enemy.x <= PIT_OFFSET
+      elsif @player.x > enemy.x
+        enemy.move(:right) unless enemy.x >= (self.width - enemy.sprite.width - (enemy.speed + PIT_OFFSET))
+      end
+
+      if @player.y < enemy.y
+        enemy.move(:up) unless enemy.y <= PIT_OFFSET
+      elsif @player.y > enemy.y
+        enemy.move(:down) unless enemy.y >= (self.height - enemy.sprite.height - (enemy.speed + PIT_OFFSET))
+      end
     end
 
     if @player.alive?
