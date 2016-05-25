@@ -11,6 +11,11 @@ class Combatant
     @x = @y = PIT_OFFSET
   end
 
+  # def attack
+  #   if collision_detected?
+  #
+  # end
+
   def move(direction)
     @x -= speed if direction == :left
     @x += speed if direction == :right

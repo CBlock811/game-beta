@@ -10,7 +10,7 @@ class Game < Gosu::Window
     super
     @map = Gosu::Tiled.load_json(self, 'maps/pit.json')
     @player = Player.new('default_player', 6)
-    @enemies = []
+    @enemy = nil
   end
 
   def button_down(id)
@@ -20,23 +20,38 @@ class Game < Gosu::Window
     @player.heal_damage if id == Gosu::KbY
 
     if id == Gosu::KbSpace
-      @enemies << Enemy.new('dead', 2, 1, 3)
+      @enemy ||= Enemy.new('dead', 2, 1, 3)
+    end
+  end
+
+  def detect_collision(entity, direction)
+    if @enemy && @player
+      opposite = entity == @enemy ? @player : @enemy
+
+      if direction == :left
+        (entity.x - entity.speed).between?(opposite.x, opposite.x + DEFAULT_SPRITE_SIZE)
+      elsif direction == :right
+        (DEFAULT_SPRITE_SIZE + entity.x + entity.speed).between?(opposite.x, opposite.x + DEFAULT_SPRITE_SIZE)
+      elsif direction == :up
+        (entity.y - entity.speed).between?(opposite.y, opposite.y + DEFAULT_SPRITE_SIZE)
+      elsif direction == :down
+        (DEFAULT_SPRITE_SIZE + entity.y + entity.speed).between?(opposite.y, opposite.y + DEFAULT_SPRITE_SIZE)
+      end
     end
   end
 
   def update
-
-    @enemies.each do |enemy|
-      if @player.x < enemy.x
-        enemy.move(:left) unless enemy.x <= PIT_OFFSET
-      elsif @player.x > enemy.x
-        enemy.move(:right) unless enemy.x >= (WINDOW_WIDTH - DEFAULT_SPRITE_SIZE - (enemy.speed + PIT_OFFSET))
+    if @enemy
+      if @player.x < @enemy.x
+        @enemy.move(:left) unless @enemy.x <= PIT_OFFSET || detect_collision(@enemy, :left)
+      elsif @player.x > @enemy.x
+        @enemy.move(:right) unless @enemy.x >= (WINDOW_WIDTH - DEFAULT_SPRITE_SIZE - (@enemy.speed + PIT_OFFSET)) || detect_collision(@enemy, :right)
       end
 
-      if @player.y < enemy.y
-        enemy.move(:up) unless enemy.y <= PIT_OFFSET
-      elsif @player.y > enemy.y
-        enemy.move(:down) unless enemy.y >= (WINDOW_HEIGHT - DEFAULT_SPRITE_SIZE - (enemy.speed + PIT_OFFSET))
+      if @player.y < @enemy.y
+        @enemy.move(:up) unless @enemy.y <= PIT_OFFSET || detect_collision(@enemy, :up)
+      elsif @player.y > @enemy.y
+        @enemy.move(:down) unless @enemy.y >= (WINDOW_HEIGHT - DEFAULT_SPRITE_SIZE - (@enemy.speed + PIT_OFFSET)) || detect_collision(@enemy, :down)
       end
     end
 
@@ -63,9 +78,7 @@ class Game < Gosu::Window
     @map.draw(0, 0)
     @player.draw
 
-    @enemies.each do |enemy|
-      enemy.draw
-    end
+    @enemy.draw if @enemy
 
     @player.draw_health
 
