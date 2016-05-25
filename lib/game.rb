@@ -1,11 +1,10 @@
 require 'gosu'
 require 'gosu_tiled'
+require_relative './constants'
 require_relative './player'
 require_relative './enemy'
 
 class Game < Gosu::Window
-
-  PIT_OFFSET = 96
 
   def initialize(*args)
     super
@@ -31,13 +30,13 @@ class Game < Gosu::Window
       if @player.x < enemy.x
         enemy.move(:left) unless enemy.x <= PIT_OFFSET
       elsif @player.x > enemy.x
-        enemy.move(:right) unless enemy.x >= (self.width - enemy.sprite.width - (enemy.speed + PIT_OFFSET))
+        enemy.move(:right) unless enemy.x >= (WINDOW_WIDTH - DEFAULT_SPRITE_SIZE - (enemy.speed + PIT_OFFSET))
       end
 
       if @player.y < enemy.y
         enemy.move(:up) unless enemy.y <= PIT_OFFSET
       elsif @player.y > enemy.y
-        enemy.move(:down) unless enemy.y >= (self.height - enemy.sprite.height - (enemy.speed + PIT_OFFSET))
+        enemy.move(:down) unless enemy.y >= (WINDOW_HEIGHT - DEFAULT_SPRITE_SIZE - (enemy.speed + PIT_OFFSET))
       end
     end
 
@@ -47,7 +46,7 @@ class Game < Gosu::Window
       end
 
       if button_down?(Gosu::KbRight)
-        @player.move(:right) unless @player.x >= (self.width - @player.sprite.width - (@player.speed + PIT_OFFSET))
+        @player.move(:right) unless @player.x >= (WINDOW_WIDTH - DEFAULT_SPRITE_SIZE - (@player.speed + PIT_OFFSET))
       end
 
       if button_down?(Gosu::KbUp)
@@ -55,7 +54,7 @@ class Game < Gosu::Window
       end
 
       if button_down?(Gosu::KbDown)
-        @player.move(:down) unless @player.y >= (self.height - @player.sprite.height - (@player.speed + PIT_OFFSET))
+        @player.move(:down) unless @player.y >= (WINDOW_HEIGHT - DEFAULT_SPRITE_SIZE - (@player.speed + PIT_OFFSET))
       end
     end
   end
@@ -72,8 +71,8 @@ class Game < Gosu::Window
 
     if !@player.alive?
       game_over_text = Gosu::Image.from_text("YOU DEDED!", 64, {align: :center})
-      text_x = (self.width/2) - game_over_text.width/2
-      text_y = (self.height/2) - game_over_text.height/2
+      text_x = (WINDOW_WIDTH/2) - game_over_text.width/2
+      text_y = (WINDOW_HEIGHT/2) - game_over_text.height/2
       game_over_text.draw(text_x, text_y, 1, 1, 1, Gosu::Color::BLACK)
     end
   end

@@ -3,8 +3,6 @@ class Combatant
   attr_accessor :speed, :x, :y, :sprite
   attr_accessor :max_health, :health, :damage
 
-  PIT_OFFSET = 96
-
   def initialize(type, max_health, damage = 1, speed = 4)
     @sprite = Gosu::Image.new("graphics/#{type}.gif")
     @speed = speed
@@ -31,6 +29,10 @@ class Combatant
 
   def alive?
     @health > 0
+  end
+
+  def determine_hitbox
+
   end
 
   def draw
